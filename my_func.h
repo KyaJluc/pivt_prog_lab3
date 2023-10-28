@@ -106,9 +106,9 @@ void formula(int a, int b, int c)
     }
     else
     {
-        int x1 = (-b + (int)sqrt(D))/(2*a);
-        int x2 = (-b - (int)sqrt(D))/(2*a);
-        printf("Дискриминант положительный! Уравнение имеет корни: x1=%d; x2=%d\n",x1,x2);
+        float x1 = (-b + sqrt(D))/(2*a);
+        float x2 = (-b - sqrt(D))/(2*a);
+        printf("Дискриминант положительный! Уравнение имеет корни: x1=%.1f; x2=%.1f\n",x1,x2);
     }
 }
 
@@ -133,6 +133,11 @@ void vieta(int a, int p, int q)
         {
             p>0?x1--:x1++;
             x2=-p-x1;
+            if (abs(x1)>10000)
+            {
+                printf("ОШИБКА! Корни не найдены\n");
+                return;
+            }
         }
     }
     else
@@ -143,9 +148,15 @@ void vieta(int a, int p, int q)
         {
             p>0?x1++:x1--;
             x2=-p-x1;
+            if (abs(x1)>10000)
+            {
+                printf("ОШИБКА! Корни не найдены\n");
+                return;
+            }
         }
     }
-    printf("x1=%d; x2=%d\n",x1,x2);
+    if (x1==x2) printf("x=%d\n",x1);
+    else printf("x1=%d; x2=%d\n",x1,x2);
 }
 
 void perebroska(int a, int b, int c)
@@ -160,6 +171,11 @@ void perebroska(int a, int b, int c)
         {
             b>0?y1--:y1++;
             y2=(-b)-y1;
+            if (abs(y1)>10000)
+            {
+                printf("ОШИБКА! Корни не найдены\n");
+                return;
+            }
         }
     }
     else
@@ -168,8 +184,38 @@ void perebroska(int a, int b, int c)
         {
             b>0?y1++:y1--;
             y2=(-b)-y1;
+            if (abs(y1)>10000)
+            {
+                printf("ОШИБКА! Корни не найдены\n");
+                return;
+            }
         }
     }
     printf("Находим y1 и y2: y1=%d; y2=%d\n",y1,y2);
-    printf("Получим корни: x1=y1/a=%d; x2=y2/a=%d\n",y1/a,y2/a);
+    printf("Получим корни: ");
+    if (y1==y2) printf("x=y/a=%.1f",(float)y1/a);
+    else printf("x1=y1/a=%.1f; x2=y2/a=%.1f\n",(float)y1/a,(float)y2/a);
+}
+
+void index_props(int a, int b, int c)
+{
+    printf("\tВНИМАНИЕ!\nМогут быть ошибки в расчетах c плавающей точкой!\n");
+    printf("Рассмотрим три свойства коэффициентов:\n");
+    if (a+b+c==0) printf("1). a+b+c=0 => x1=1; x2=c/a=%.1f\n",(float)c/a);
+    else printf("1). a+b+c!=0\n");
+    if (b%2==0)
+    {
+        int k = b/2;
+        printf("2). b = %d = 2k = 2*%d - четное число, следовательно: x1=%.1f; x2=%.1f\n",b,k,(-k+sqrt(pow(k,2)-a*c))/a,(-k-sqrt(pow(k,2)-a*c)));
+    }
+    else printf("2). b = %d - нечетное число\n",b);
+    float p=b, q=c;
+    if(a!=1)
+    {
+        printf("3). Приведем уравнение\n");
+        p/=a;
+        q/=a;
+    }
+    else printf("3). Это приведенное уравнение, где a=1, b=p, c=q\n");
+    printf("Следовательно, x1=%.1f, x2=%.1f\n",(-p+sqrt(pow(p,2)-4*q))/2,(-p-sqrt(pow(p,2)-4*q))/2);
 }

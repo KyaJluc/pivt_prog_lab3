@@ -57,7 +57,7 @@ void main()
                 perebroska(a,b,c);
                 break;
             case 6:
-                
+                index_props(a,b,c);
                 break;
             case 0:
                 printf("Выход из программы...\n");
