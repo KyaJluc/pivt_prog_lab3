@@ -41,11 +41,12 @@ void main()
         switch (mode)
         {
             case 1:
-                first_case(a,b,c);
+                multipliers(a,b,c);
                 exit=1;
                 break;
             case 2:
-                
+                full_square(a,b,c);
+                exit=1;
                 break;
             case 3:
                 
