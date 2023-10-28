@@ -66,7 +66,6 @@ void full_square(int a, int b, int c)
     printf("%dx^2%s%dx = %dx^2%s%d*2*x\n",a,b>0?"+":"",b,a,mult>0?"+":"",mult);
     printf("Чтобы получить полный квадрат, нужно прибавить %d^2:\n",abs(mult));
     printf("%dx^2%s%d*2*x+%d^2 = (x%s%d)^2\n",sqrt_a,mult>0?"+":"",mult,abs(mult),mult>0?"+":"",mult);
-    //mult=abs(mult);
     printf("Преобразуем левую часть уравнения прибавляя и вычитая %d^2:\n",abs(mult));
     printf("%dx^2%s%dx%s%d = (x%s%d)^2-%d%s%d = (x%s%d)^2%s%d\n",a,b>0?"+":"",b,c>0?"+":"",c,
                                                     mult>0?"+":"",mult,(int)pow(mult,2),c>0?"+":"",c,
@@ -88,4 +87,55 @@ void full_square(int a, int b, int c)
                                                         mult>0?"+":"",mult,sqrt(-(-(int)pow(mult,2)+c)));
         printf("Значит, корни уравнения: x1=%0.f; x2=%.0f.\n",sqrt(-(-(int)pow(mult,2)+c))-mult,-sqrt(-(-(int)pow(mult,2)+c))-mult);
     }
+}
+
+void formula(int a, int b, int c)
+{
+    printf("Рассчитаем дискриминант D:\n");
+    int D = pow(b,2)-4*a*c;
+    if (D<0)
+    {
+        printf("Дискриминант отрицательный! Корней нет!\n");
+        return;
+    }
+    if (D==0)
+    {
+        int x = -b/(2*a);
+        printf("Дискриминант равен нулю! Уравнение имеет корень: x=%d\n",x);
+    }
+    else
+    {
+        int x1 = (-b + (int)sqrt(D))/(2*a);
+        int x2 = (-b - (int)sqrt(D))/(2*a);
+        printf("Дискриминант положительный! Уравнение имеет корни: x1=%d; x2=%d\n",x1,x2);
+    }
+}
+
+void vieta(int a, int p, int q)
+{
+    printf("По теореме Виета корни уравнения удовлетворяют системе:\n");
+    printf("\tx1*x2 = %d\n",q);
+    printf("\tx1 + x2 = %d\n",-p);
+    int x1=0, x2=0;
+    if (q>0)
+    {
+        printf("Так как свободый член q>0, то уравнение имеет два одинаковых по знаку корня\n");
+        printf("Так как p%s0, оба корня %s\nСледовательно: ",p>0?">":"<",p>0?"отрицательны":"положительны");
+        while(x1*x2!=q || x1+x2!=-p)
+        {
+            p>0?x1--:x1++;
+            x2=-p-x1;
+        }
+    }
+    else
+    {
+        printf("Так как свободый член q<0, то уравнение имеет два разных по знаку корня\n");
+        printf("Так как p%s0, больший по модулю корень %s\nСледовательно: ",p>0?">":"<",p>0?"отрицателен":"положителен");
+        while(x1*x2!=q || x1+x2!=-p)
+        {
+            p>0?x1++:x1--;
+            x2=-p-x1;
+        }
+    }
+    printf("x1=%d; x2=%d\n",x1,x2);
 }
