@@ -54,7 +54,7 @@ void main()
                 vieta(a,b,c);
                 break;
             case 5:
-                
+                perebroska(a,b,c);
                 break;
             case 6:
                 

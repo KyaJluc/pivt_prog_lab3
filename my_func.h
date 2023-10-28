@@ -92,6 +92,7 @@ void full_square(int a, int b, int c)
 void formula(int a, int b, int c)
 {
     printf("Рассчитаем дискриминант D:\n");
+    printf("\tВНИМАНИЕ!\nПри получении не целого квадратного корня из D могут быть ошибки в расчетах!\n");
     int D = pow(b,2)-4*a*c;
     if (D<0)
     {
@@ -116,6 +117,13 @@ void vieta(int a, int p, int q)
     printf("По теореме Виета корни уравнения удовлетворяют системе:\n");
     printf("\tx1*x2 = %d\n",q);
     printf("\tx1 + x2 = %d\n",-p);
+    if (a!=1)
+    {
+        if (a!=1) printf("\tВНИМАНИЕ!\nМогут быть ошибки в расчетах, если b и c не делятся нацело на а!\n");
+        printf("Приведем к нужному виду, разделив уравнение на а\n");
+        p/=a;
+        q/=a;
+    }
     int x1=0, x2=0;
     if (q>0)
     {
@@ -138,4 +146,30 @@ void vieta(int a, int p, int q)
         }
     }
     printf("x1=%d; x2=%d\n",x1,x2);
+}
+
+void perebroska(int a, int b, int c)
+{
+    printf("Умножим обе части уравнения на а(%d), где ax=y\nПо теореме Виета:\n",a);
+    printf("\ty1*y2 = a*c = %d\n",a*c);
+    printf("\ty1+y2 = -b = %d\n",-b);
+    int y1=0,y2=0;
+    if (a*c>0)
+    {
+        while(y1*y2!=a*c || y1+y2!=-b)
+        {
+            b>0?y1--:y1++;
+            y2=(-b)-y1;
+        }
+    }
+    else
+    {
+        while(y1*y2!=a*c || y1+y2!=-b)
+        {
+            b>0?y1++:y1--;
+            y2=(-b)-y1;
+        }
+    }
+    printf("Находим y1 и y2: y1=%d; y2=%d\n",y1,y2);
+    printf("Получим корни: x1=y1/a=%d; x2=y2/a=%d\n",y1/a,y2/a);
 }
